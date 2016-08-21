@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>深入理解对象原型(1)</title>
+    </head>
+    <body>
+        <div>
+            探索函数原型与对象原型的不同
+        </div>
+        <script type="text/javascript">
+            function Person(name, age) {
+                this.name = name;
+                this.age = age;
+                this.sayYourName = function () {
+                    return this.name;
+                }
+            }
+            Person.prototype.sayYourAge = function () {
+                console.log(this.age);
+            }
+
+            var alihanniba = new Person('R·G', 22);     //实例,为函数对象
+            console.log(alihanniba.__proto__);          //函数对象原型属性, Object
+            console.log(alihanniba.__proto__ === Person.prototype);
+            console.log(Person.prototype.isPrototypeOf(alihanniba));        //isPrototypeOf() 方法测试一个对象是否存在于另一个对象的原型链上。
+            console.log(alihanniba.__proto__.__proto__);//函数原型 的 原型属性 ,Object
+            console.log(alihanniba.__proto__.__proto__ === Object.prototype);//函数原型 是对象,所以函数原型的原型属性 === 对象的原型属性
+            console.log(alihanniba.__proto__.__proto__.__proto__);      //null,”Object {}”原型对象就是原型链的终点了,原型链不能往上了
+            console.log(Person.__proto__ === Function.__proto__, Person.__proto__ === Function.prototype);      //true,true,函数对象,非实例
+            console.log(Person.__proto__.__proto__);        //Object
+            console.log(Person.__proto__);      //Function
+            console.log(Person.prototype.__proto__);        //Object
+            console.log({});        //Object
+            console.log({}.__proto__, Object.prototype === {}.__proto__);       //Object, true
+            console.log(Function.prototype);    //function
+            console.log(Function.__proto__);    //function
+            console.log(Function.__proto__.__proto__);      //Object
+            console.log(Function.prototype === Object.prototype);   //false
+            console.log(Function.__proto__ === Object.__proto__);   //true
+            console.log(new Function().__proto__ === Function.prototype);   //true
+            console.log(Function.__proto__.__proto__ === {}.__proto__);     //true
+        </script>
+    </body>
+</html>
