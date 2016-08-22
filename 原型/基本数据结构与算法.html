@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>基本数据结构与算法</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="csrf-token" content=""/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link href="" rel="stylesheet">
+    </head>
+    <body>
+        <h1>实例与构造函数原型的研究</h1>
+        <h3>数组去重的实现</h3>
+        <h5>基本数组去重</h5>
+        <script>
+            Array.prototype.unique = function () {
+                var result = {};
+                this.forEach(function(v) {
+                    if (result.indexOf(v) < 0) {
+                        result.push(v);
+                    }
+                });
+                return result;
+            }
+        </script>
+        <h5>利用hash表去重，这是一种空间换时间的方法</h5>
+        <script>
+            //1.
+            Array.prototype.unique = function () {
+                var result = {}, hash = {};
+                this.forEach(function(v) {
+                    if (!hash[v]) {
+                        hash[v] = true;
+                        result.push(v);
+                    }
+                });
+                return result;
+            }
+
+            //2.
+            Array.prototype.unique = function () {
+                var result = {}, hash = {};
+                this.forEach(function (v) {
+                    var type = typeOf(v);
+                    hash[v] || (hash[v] = new Array());
+                    if (hash[v].indexOf(type) < 0) {
+                        hash[v].push(type);
+                        result.push(v);
+                    }
+                });
+                return result;
+            }
+
+            //3.
+            Array.prototype.unique = function () {
+                var result = [this[0]];
+                this.sort();
+                this.forEach(function (v) {
+                    v != result[result.length - 1] && result.push(v);
+                });
+                return result;
+            }
+        </script>
+        <h5>快速排序-非js数组方法</h5>
+        <script>
+            
+        </script>
+
+        <h5>快速排序-使用数组方法</h5>
+        <script>
+            function quickSort (arr) {
+                if (arr.length < 1) {
+                    return arr;
+                }
+                var index = Math.floor(arr.length / 2);
+                var key = arr.splice(index, 1)[0];
+                var left = [], right = [];
+                arr.forEach(function (v) {
+                    v < key ? left.push(v) : right.push(v);
+                })
+                //递归调用
+                return quickSort(left).concat([key], quickSort(left));
+            }
+        </script>
+    </body>
+</html>
