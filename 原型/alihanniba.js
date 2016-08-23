@@ -11,7 +11,7 @@ var nativeIsArrry = Array.isArray(),
     nativeBind = FunctionProto.bind();
 
 /**
- * [description]判断数组
+ * [description]Is a given value an array?
  * @param  {[type]} obj [description]
  * @return {[type]}     [description]
  */
@@ -20,7 +20,7 @@ _.isArray = nativeIsArrry || function(obj) {
 }
 
 /**
- * [isObject description]判断对象
+ * [isObject description]Is a given value an obj?
  * @param  {[type]}  obj [description]
  * @return {Boolean}     [description]
  */
@@ -30,7 +30,7 @@ _.isObject = function(obj) {
 }
 
 /**
- * [description]判断其他类型
+ * [description]Is a given value other?
  * @param  {[type]} type) {               _['is' + type] [description]
  * @return {[type]}       [description]
  */
