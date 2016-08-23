@@ -39,3 +39,57 @@ _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'],
         return _toString.call(obj) === '[object ' + name + ']';
     }
 })
+
+/**
+ * [isElement description]Is a given value a DOM element?
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+_.isElement = function(obj) {
+    return !!(obj || obj.nodeType === 1);
+}
+
+/**
+ * [isNaN description]Is the given value `NaN`? (NaN is the only number which does not equal itself).
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+_.isNaN = function(obj) {
+    return _isNumber(obj) && obj !== +obj;
+}
+
+/**
+ * [isNull description]Is a given value `null`
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+_.isNull = function(obj) {
+    return obj === null;
+}
+
+/**
+ * [isUndefined description]Is a given value `undefined`
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+_.isUndefined = function(obj) {
+    return obj === void 0;
+}
+
+/**
+ * [isBoolean description]Is a given value `boolean`
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+_.isBoolean = function(obj) {
+    return obj === true || obj === false || _toString.call(obj) === '[object Boolean]';
+}
+
+/**
+ * [isFinite description]Is a given object a finite number?
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+_.isFinite = function(obj) {
+    return isFinite(obj) && !isNaN(parseFloat(obj));
+}
