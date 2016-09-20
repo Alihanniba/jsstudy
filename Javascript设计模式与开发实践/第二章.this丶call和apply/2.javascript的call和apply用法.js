@@ -40,3 +40,44 @@ func3.apply( null, [ 1, 2, 3 ] );
 //  比如借用其他对象的方法。那么我们可以传入 null 来代替某个具体的对象:
 
 Math.max.apply( null, [ 1, 2, 5, 3, 4 ] );      // 输出:5
+
+//  call和apply的用途
+//  1.改变this指向
+//  call 和 apply 最常见的用途是改变函数内部的 this 指向,我们来看个例子:
+
+var obj1 = {
+    name: 'alihanniba'
+}
+var obj2 = {
+    name: 'R丶G'
+}
+
+window.name = 'window';
+
+var getName = function () {
+    console.log(this.name);
+}
+
+getName();
+getName.call(obj1);
+getName.call(obj2);
+
+
+//  2. Function.prototype.bind
+//  大部分高级浏览器都实现了内置的 Function.prototype.bind,用来指定函数内部的 this 指向,
+//  即使没有原生的 Function.prototype.bind 实现,我们来模拟一个也不是难事,代码如下:
+
+Function.prototype.bind = function (context) {
+    var self = this;        //保存原函数
+    return function () {    //返回一个新的函数
+        return self.apply(context, arguments);      //执行新的函数的时候,会把之前传入的context当做新函数体内的this
+    }
+}
+var obj = {
+    name: 'alihanniba'
+}
+var func4 = function () {
+    console.log(this.name);
+}.bind(obj);
+
+func4();
