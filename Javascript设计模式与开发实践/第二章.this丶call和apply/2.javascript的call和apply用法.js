@@ -67,17 +67,56 @@ getName.call(obj2);
 //  大部分高级浏览器都实现了内置的 Function.prototype.bind,用来指定函数内部的 this 指向,
 //  即使没有原生的 Function.prototype.bind 实现,我们来模拟一个也不是难事,代码如下:
 
-Function.prototype.bind = function (context) {
-    var self = this;        //保存原函数
+Function.prototype.bind = function () {
+    var self = this,        //保存原函数
+        context = [].shift.call(arguments);     //需要绑定的this上下文
+        args = [].slice.call(arguments);        //剩余的参数转成数组
     return function () {    //返回一个新的函数
-        return self.apply(context, arguments);      //执行新的函数的时候,会把之前传入的context当做新函数体内的this
+        return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+        //执行新的函数的时候,会把之前传入的context当做新函数体内的this
+        //并且组合两次分别传入的参数,作为新函数的参数
     }
 }
 var obj = {
     name: 'alihanniba'
 }
-var func4 = function () {
+var func4 = function (a, b, c, d) {
     console.log(this.name);
-}.bind(obj);
+    console.log([a, b, c, d]);
+}.bind(obj, 1, 2);
 
-func4();
+func4(3, 4);
+
+//  3. 借用其他对象的方法
+//  借用方法的第一种场景是“借用构造函数”,通过这种技术,可以实现一些类似继承的效果:
+var A = function (name) {
+    this.name = name;
+}
+var B = function () {
+    A.apply(this, arguments)
+}
+B.prototype.getName = function () {
+    return this.name;
+}
+var b = new B('alihanniba');
+console.log(b.getName());
+
+
+//  函数的参数列表 arguments 是一个类数组对象,
+//  虽然它也有“下标”,但它并非真正的数组, 所以也不能像数组一样,进行排序操作或者往集合里添加一个新的元素。
+//  这种情况下,我们常常 会借用 Array.prototype 对象上的方法。
+//  比如想往 arguments 中添加一个新的元素,通常会借用 Array.prototype.push:
+
+(function () {
+    Array.prototype.push.call(arguments, 3);
+    console.log(arguments);
+})(1, 2)
+
+//  在操作 arguments 的时候,我们经常非常频繁地找 Array.prototype 对象借用方法
+//  想把 arguments 转成真正的数组的时候,可以借用 Array.prototype.slice 方法;
+//  想截去 arguments 列表中的头一个元素时,又可以借用 Array.prototype.shift 方法。
+
+
+//  可以借用 Array.prototype.push 方法的对象还要满足以下两个条件,
+//      1.对象本身要可以存取属性;
+//      2.对象的 length 属性可读写。
