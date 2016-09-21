@@ -48,7 +48,7 @@ var proxySingletionCreateDiv = (function () {
         if (!instance) {
             instance = new createDiv(html)
         }
-        return instance
+        return instance;
     }
 })
 var a = new proxySingletionCreateDiv('R丶G')
