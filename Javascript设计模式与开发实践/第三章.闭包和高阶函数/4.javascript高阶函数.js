@@ -89,3 +89,24 @@ for (var i = 0, type; type = ['String', 'Array', 'Number'][i++];) {
 }
 Type.isArray([]);
 Type.isString('alihanniba')
+
+//  2. getSingle
+//  下面是一个单例模式的例子,在第三部分设计模式的学习中,我们将进行更深入的讲解,这
+//  里暂且只了解其代码实现:
+
+var getSingle = function (fn) {
+    var ret;
+    return function () {
+        return ret || (ret = fn.apply(this, arguments));
+    }
+}
+
+//  这个高阶函数的例子,既把函数当作参数传递,又让函数执行后返回了另外一个函数。
+//  我们 可以看看 getSingle 函数的效果:
+
+var getScript = getSingle(function () {
+    return document.createElement('script');
+})
+var script1 = getScript();
+var script2 = getScript();
+console.log(script1 === script2);
