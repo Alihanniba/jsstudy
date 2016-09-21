@@ -21,3 +21,6 @@ var getUserInfo = function (userId, callback) {
 getUserInfo(7, function (data) {
     console.log(data.userName);
 })
+
+//  回调函数的应用不仅只在异步请求中,当一个函数不适合执行一些请求时,
+//  我们也可以把这 些请求封装成一个函数,并把它作为参数传递给另外一个函数,“委托”给另外一个函数来执行。
