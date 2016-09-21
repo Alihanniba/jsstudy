@@ -49,8 +49,10 @@ var throttle = function (fn, interval) {
             clearTimeout(timer);
             timer = null;
             __self.apply(__me, args);
-        }, setInterval(function () {
-
-        },  || 500);
+        }, interval || 500);
     }
 }
+
+window.onresize = throttle(function () {
+    console.log(1);
+}, 500);
