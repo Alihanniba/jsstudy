@@ -16,4 +16,46 @@
             }
         };
 
-//
+//      把a 和 b 都定义为namespace1的属性,这样可以减少变量和全局作用域打交道的机会.
+//      另外还可以动态的创建命名空间
+        var MyApp = {};
+        MyApp.namespace = function(name) {
+            var parts = name.split('.');
+            var current = MyApp;
+            for (variinparts) {
+                if (!current[parts[i]]) {
+                    current[parts[i]] = {};
+                }
+                current = current[parts[i]];
+            }
+        }
+
+
+        MyApp.namespace('event');
+        MyApp.namespace('dom.style');
+        console.dir(MyApp);
+
+//  上面代码等价于
+        var MyApp = {
+            event: {},
+            dom: {
+                style: {}
+            }
+        };
+
+
+//         2.使用闭包封装私有变量
+        //  这种方法把一些变量封装在闭包的内部,只暴露一些接口跟外界通信:
+        var user = (function() {
+            var __name = 'sven',
+                __age = 29;
+            return {
+                getUserInfo: function() {
+                    return __name + '-' + __age;
+                }
+            }
+        })();
+
+        //  我们用下划线来约定私有变量__name和__age,它们被封装在闭包产生的作用域中,
+        //  外部是访问不到这两个变量的,这就避免了对全局的污染.
+    
