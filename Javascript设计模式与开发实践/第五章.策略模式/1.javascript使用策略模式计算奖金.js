@@ -8,4 +8,34 @@
 //          就需要接受两个参数:员工的工资数额和他的绩效考核等级.
 //          代码如下:
 
-    
+    var calculateBonus = function(performanceLevel, salary) {
+        if (performanceLevel === 'S') {
+            return salary * 4;
+        }
+        if (performanceLevel === 'A') {
+            return salary * 3;
+        }
+        if (performanceLevel === 'B') {
+            return salary * 2;
+        }
+    };
+    calculateBonus('B', 20000); //    40000
+    calculateBonus('S', 6000); //    24000
+
+//          代码简单,但是存在明显的缺点,接下来用策略模式重构
+
+
+var performanceS = function() {};
+performanceS.prototype.calculate = function (salary) {
+    return salary * 4;
+};
+
+var performanceA = function() {};
+performanceA.prototype.calculate = function (salary) {
+    return salary * 3;
+};
+
+var performanceB = function() {};
+performanceB.prototype.calculate = function (salary) {
+    return salary * 2;
+};
